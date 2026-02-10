@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Invitation</title>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function () {
+    emailjs.init("wxh3mOcTDKmppkadl");
+})();
+</script>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+    }
+
+    .card {
+        position: relative;
+        background: white;
+        padding: 25px 30px;
+        border-radius: 22px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        max-width: 360px;
+        width: 90%;
+        animation: fadeIn 0.6s ease;
+        overflow: hidden;
+    }
+
+    img {
+        max-width: 200px;
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        color: #e63946;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #555;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    button {
+        padding: 12px 22px;
+        font-size: 15px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        margin: 6px 0;
+        transition: 0.3s;
+        width: 100%;
+    }
+
+    .primary {
+        background: #e63946;
+        color: white;
+    }
+
+    .secondary {
+        background: #ccc;
+        color: #333;
+    }
+
+    .choice-btn {
+        background: #ffe5e9;
+        color: #333;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    .details {
+        text-align: left;
+        margin-top: 15px;
+        font-size: 15px;
+    }
+
+    .details strong {
+        color: #e63946;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+        from { transform: translateY(0) scale(1); opacity: 1; }
+        to { transform: translateY(-120px) scale(1.4); opacity: 0; }
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: float 5s linear infinite;
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+    .slowmo {
+        animation: slowReveal 1.8s ease forwards;
+    }
+
+    @keyframes slowReveal {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card"></div>
+
+<script>
+const card = document.getElementById("card");
+let chosenDate = "";
+let chosenRestaurant = "";
+
+/* 🔽 ADD THIS BELOW */
+// function sendToYou() {
+//     emailjs.send("service_xc6hoxx", "template_jh70nqs", {
+//         date: chosenDate,
+//         restaurant: chosenRestaurant
+//     }).then(
+//         () => console.log("Response sent 💌"),
+//         error => console.error("Email failed 😢", error)
+//     );
+// }
+
+/* FLOATING HEARTS */
+function spawnHearts() {
+    for (let i = 0; i < 12; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = ["💖","💕","💘","🥰","❤️"][Math.floor(Math.random()*5)];
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.bottom = "-20px";
+        heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+        card.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+    }
+}
+
+/* STEP 1 */
+function stepHi() {
+    card.innerHTML = `
+        <img src="From KlickPin CF Cats.gif">
+        <h1>Hi 👋</h1>
+        <p>I’ve been meaning to ask you something…</p>
+        <button class="primary" onclick="stepFreeWeekend()">Continue →</button>
+
+    `;
+}
+
+/* STEP: FREE THIS WEEKEND */
+function stepFreeWeekend() {
+    card.innerHTML = `
+        <img src="From KlickPin CF Myaowl Shy.gif">
+        <h1>Are you free this weekend? 🗓️</h1>
+        <button class="primary" onclick="stepAsk()">Yes 😊</button>
+        <button class="secondary" onclick="stepBusy()">Not really 😅</button>
+    `;
+}
+
+function stepBusy() {
+    card.innerHTML = `
+        <img src="From KlickPin CF Ghim.gif">
+        <h1>Ohhh okay 🥺</h1>
+        <p>That’s alright… but can I still ask you something?</p>
+        <button class="primary" onclick="stepAsk()">Okay, go on 💬</button>
+    `;
+}
+
+/* STEP 2 */
+function stepAsk() {
+    card.innerHTML = `
+        <img src="From KlickPin CF Cute.gif">
+        <h1>Will you go on a date with me? 💕</h1>
+        <button class="primary" onclick="stepChooseDate()">Yes 💖</button>
+        <button class="secondary" onclick="stepNo()">No 🙈</button>
+    `;
+}
+
+/* STEP NO */
+function stepNo() {
+    card.innerHTML = `
+        <img src="From KlickPin CF Ghim.gif">
+        <h1>Oh! Oww...<br>I'll cry na lang.<br>😭😭😭</h1>
+        <p>Really? Final answer na poo?</p>
+        <button class="secondary" onclick="stepAsk()">Try again</button>
+    `;
+}
+
+/* STEP DATE */
+function stepChooseDate() {
+    card.innerHTML = `
+        <img src="From KlickPin CF Cute.gif">
+        <h1>When should we go? 📅</h1>
+        <button class="choice-btn" onclick="selectDate('February 14, 2026')">February 14 💘</button>
+        <button class="choice-btn" onclick="selectDate('February 15, 2026')">February 15 💕</button>
+    `;
+}
+
+function selectDate(date) {
+    chosenDate = date;
+    stepChooseRestaurant();
+}
+
+/* STEP RESTO */
+function stepChooseRestaurant() {
+    card.innerHTML = `
+        <img src="From KlickPin CF Cute.gif">
+        <h1>Where shall we eat? 🍽</h1>
+
+        <button class="choice-btn" onclick="selectRestaurant('Le So Relle')">
+            Le So Relle
+        </button>
+
+        <button class="choice-btn" onclick="selectRestaurant('Reese Restaurant')">
+            Reese Restaurant
+        </button>
+
+        <button class="choice-btn" onclick="selectRestaurant('Kai\\'s')">
+            Kai's
+        </button>
+
+        <button class="choice-btn" onclick="selectRestaurant('Cheraf\\'s')">
+            Cheraf's
+        </button>
+
+        <hr style="margin:12px 0; border:none; border-top:1px dashed #f3b3b8">
+
+        <p><strong>Other places or restaurants where you want us to eat:</strong></p>
+        <input 
+            id="otherPlace"
+            type="text"
+            placeholder="Type the place here…"
+            style="
+                width:100%;
+                padding:10px;
+                border-radius:12px;
+                border:1px solid #ddd;
+                margin-bottom:8px;
+                font-size:14px;
+            "
+        >
+
+        <button class="choice-btn" onclick="selectOtherRestaurant()">
+            Confirm Place 📍
+        </button>
+    `;
+}
+
+function selectRestaurant(place) {
+    chosenRestaurant = place;
+    sendToYou();              // 💌 EMAIL SENT HERE
+    stepRomanticReveal();
+}
+
+function selectOtherRestaurant() {
+    const input = document.getElementById("otherPlace");
+    const value = input.value.trim();
+
+    if (!value) {
+        alert("Please type the place 😊");
+        return;
+    }
+
+    chosenRestaurant = value;
+    sendToYou();              // 💌 EMAIL SENT HERE
+    stepRomanticReveal();
+}
+
+/* FINAL REVEAL */
+function stepRomanticReveal() {
+    card.innerHTML = `
+        <div class="slowmo">
+            <img src="From KlickPin CF Couple Love.gif">
+            <h2>💌 You are cordially invited 💌</h2>
+            <p>to our date.</p>
+            <div class="details">
+                <p><strong>📅 When:</strong> ${chosenDate}</p>
+                <p><strong>🍽 Where:</strong> ${chosenRestaurant}</p>
+                <p><strong>👗 Dress code:</strong> Whatever makes you feel beautiful ✨</p>
+                
+            </div>
+        </div>
+    `;
+    spawnHearts();
+    setInterval(spawnHearts, 3500);
+}
+
+/* INIT */
+stepHi();
+
+let emailSent = false;
+
+function sendToYou() {
+    if (emailSent) return;
+    emailSent = true;
+
+    emailjs.send("service_xc6hoxx", "template_jh70nqs", {
+        date: chosenDate,
+        restaurant: chosenRestaurant
+    }).then(
+        () => console.log("Response sent 💌"),
+        error => console.error("Email failed 😢", error)
+    );
+}
+
+</script>
+
+</body>
+</html>
+
+
